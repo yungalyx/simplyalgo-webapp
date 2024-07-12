@@ -2,6 +2,9 @@ import { DashboardConfig } from "types"
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
+    { title: "Explore", 
+      href: "/explore",
+    }, 
     {
       title: "Documentation",
       href: "/docs",
@@ -14,7 +17,7 @@ export const dashboardConfig: DashboardConfig = {
   ],
   sidebarNav: [
     {
-      title: "Posts",
+      title: "Subscriptions",
       href: "/dashboard",
       icon: "post",
     },

@@ -20,13 +20,23 @@ interface EditorPageProps {
 }
 
 export default async function EditorPage({ params }: EditorPageProps) {
-  const user = await getCurrentUser()
+  // const user = await getCurrentUser()
 
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
+  // if (!user) {
+  //   redirect(authOptions?.pages?.signIn || "/login")
+  // }
 
-  const post = await getPostForUser(params.postId, user.id)
+  // const post = await getPostForUser(params.postId, user.id)
+
+  const post = {
+    id: "sefniofa",
+    title: "seomthing",
+    published: true,
+    createdAt: new Date(),
+    content: {
+      something: "soemthing"
+    }
+  };
 
   if (!post) {
     notFound()

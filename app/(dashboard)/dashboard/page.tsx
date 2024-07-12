@@ -14,30 +14,36 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-  const user = await getCurrentUser()
+  // const user = await getCurrentUser()
 
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
+  // if (!user) {
+  //   redirect(authOptions?.pages?.signIn || "/login")
+  // }
 
-  const posts = await db.post.findMany({
-    where: {
-      authorId: user.id,
-    },
-    select: {
-      id: true,
-      title: true,
-      published: true,
-      createdAt: true,
-    },
-    orderBy: {
-      updatedAt: "desc",
-    },
-  })
+  const posts = [{
+    id: "sefniofa",
+    title: "seomthing",
+    published: true,
+    createdAt: new Date(),
+  }];
+  // const posts = await db.post.findMany({
+  //   where: {
+  //     authorId: user.id,
+  //   },
+  //   select: {
+  //     id: true,
+  //     title: true,
+  //     published: true,
+  //     createdAt: true,
+  //   },
+  //   orderBy: {
+  //     updatedAt: "desc",
+  //   },
+  // })
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
+      <DashboardHeader heading="Subscriptions" text="View current subscriptions.">
         <PostCreateButton />
       </DashboardHeader>
       <div>

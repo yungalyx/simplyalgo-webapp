@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
@@ -47,11 +48,10 @@ export default async function IndexPage() {
             Follow along on Twitter
           </Link>
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            An example app built using Next.js 13 server components.
+            Trade smarter. Trade Simply. 
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            I&apos;m building a web app with Next.js 13 and open sourcing
-            everything. Follow along as we figure this out together.
+            Unlock your money&apos;s potential with hedge-fund quality algorithms. Curated by top quants in the industry. 
           </p>
           <div className="space-x-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
@@ -175,6 +175,33 @@ export default async function IndexPage() {
             built using Contentlayer and MDX.
           </p>
         </div>
+      </section>
+      <section
+        id="copytrading"
+        className="container space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24"
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-row items-center space-x-12 text-center">
+          <div>
+            <h2 className="text-left font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+              Outperform the market with industry experts. 
+            </h2>
+            <p className="max-w-[75%] text-left leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+              Subscribe to your favourite algorithms with confidence by comparing transparent track record and performance history. 
+            </p>
+          </div>
+
+          <div> 
+            <Image
+              src={"/images/marketing/copy.jpg"}
+              alt="cow"
+              width={804}
+              height={452}
+              className="rounded-md border bg-muted transition-colors"
+            />
+          </div>
+         
+        </div>
+      
       </section>
       <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
