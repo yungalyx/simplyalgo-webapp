@@ -62,6 +62,11 @@ module.exports = {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         heading: ["var(--font-heading)", ...fontFamily.sans],
       },
+      backgroundImage: {
+        'radial-gradient': 'radial-gradient(18% 100% at 60% 100%, rgba(251, 113, 133, 0.7), rgba(253, 186, 116, 0.56))',
+        'noise': "url('/images/background/noise.jpg')",
+        'gradiant': "url('/images/background/grad1.jpg')",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
