@@ -44,6 +44,10 @@ module.exports = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        accent2: {
+          DEFAULT: "hsl(var(--accent2))",
+          foreground: "hsl(var(--accent2-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -61,11 +65,15 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         heading: ["var(--font-heading)", ...fontFamily.sans],
+        lays: ["var(--font-lays)", ...fontFamily.sans],
       },
       backgroundImage: {
         'radial-gradient': 'radial-gradient(18% 100% at 60% 100%, rgba(251, 113, 133, 0.7), rgba(253, 186, 116, 0.56))',
         'noise': "url('/images/background/noise.jpg')",
         'gradiant': "url('/images/background/grad1.jpg')",
+        'ivory': '#fffff0',
+        'pearl': '#fcfcf7',
+        'steel': '#f8f7f4',
       },
       keyframes: {
         "accordion-down": {

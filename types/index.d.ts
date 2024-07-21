@@ -52,6 +52,14 @@ export type DashboardConfig = {
   sidebarNav: SidebarNavItem[]
 }
 
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+}
+
+export type FaqConfig = FaqItem[];
+
 export type SubscriptionPlan = {
   name: string
   description: string

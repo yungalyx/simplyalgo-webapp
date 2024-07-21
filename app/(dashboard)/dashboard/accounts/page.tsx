@@ -27,7 +27,9 @@ export default async function AccountPage() {
   //   },
   // })
   return <div> 
-    <p> wqdnoqwndqndqw</p>
+    <h1> Accounts </h1>
+    <p> Accounts are where your funds are held, it can be your balance on this platform. It can also be external trading accounts where we have your API keys! </p>
+    <p> External accounts can only subscribe to a single strategy, where internal accounts can subscribe to any number of algos. </p>
   </div>
 
  

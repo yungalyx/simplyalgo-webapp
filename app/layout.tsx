@@ -17,7 +17,21 @@ const fontSans = FontSans({
 // Font files can be colocated inside of `pages`
 const fontHeading = localFont({
   src: "../assets/fonts/CalSans-SemiBold.woff2",
-  variable: "--font-heading",
+  variable: "--font-lays",
+})
+
+const fontLays = localFont({
+  src: [
+    {
+      path: '../assets/fonts/laygrotesk-trial-medium.otf',
+      weight: '500'
+    },
+    {
+      path: '../assets/fonts/laygrotesk-trial-bold.otf',
+      weight: '700'
+    }
+  ],
+  variable: '--font-heading'
 })
 
 interface RootLayoutProps {
@@ -79,7 +93,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-          fontHeading.variable
+          fontHeading.variable,
+          fontLays.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

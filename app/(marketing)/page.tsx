@@ -5,6 +5,22 @@ import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { faqs } from "@/config/faq"
+import Head from "next/head"
+import { Icons } from "@/components/icons"
+import SignUpSVG from "@/public/images/marketing/grape-14.svg";
+import SubscribeSVG from "@/public/images/marketing/grape-8.svg";
+import DoneSVG from "@/public/images/marketing/grape-5.svg";
+import { Skeleton } from "@/components/ui/skeleton"
+import { CardSkeleton } from "@/components/card-skeleton"
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import { MdxCard } from "@/components/mdx-card"
+
 
 async function getGitHubStars(): Promise<string | null> {
   try {
@@ -33,6 +49,17 @@ async function getGitHubStars(): Promise<string | null> {
   }
 }
 
+export function HoverMe({ trigger, content}) {
+  return <HoverCard>
+    <HoverCardTrigger>
+      {trigger}
+    </HoverCardTrigger>
+    <HoverCardContent>
+      {content}
+    </HoverCardContent>
+  </HoverCard>
+}
+
 export default async function IndexPage() {
   const stars = await getGitHubStars()
 
@@ -47,7 +74,7 @@ export default async function IndexPage() {
           >
             Follow along on Twitter
           </Link>
-          <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="font-heading text-3xl font-bold text-accent-foreground sm:text-5xl md:text-6xl lg:text-7xl">
             Trade smarter. Trade Simply. 
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
@@ -58,16 +85,17 @@ export default async function IndexPage() {
               Join the waitlist
             </Link>
             <Link
-              href={siteConfig.links.github}
+              href="/register"
               target="_blank"
               rel="noreferrer"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
             >
-              Documentation
+              Login &#40;Alpha&#41;
             </Link>
           </div>
         </div>
       </section>
+  
       <section
         id="features"
         className="container space-y-6 bg-inherit py-8 dark:bg-transparent md:py-12 lg:py-24"
@@ -79,20 +107,6 @@ export default async function IndexPage() {
           <p className="max-w-[85%] leading-normal sm:text-lg sm:leading-7">
             Say some marketing things here.  
           </p>
-        </div>
-        <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <svg viewBox="0 0 24 24" className="h-12 w-12 fill-current">
-                <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0zm4.069 7.217c.347 0 .408.005.486.047a.473.473 0 0 1 .237.277c.018.06.023 1.365.018 4.304l-.006 4.218-.744-1.14-.746-1.14v-3.066c0-1.982.01-3.097.023-3.15a.478.478 0 0 1 .233-.296c.096-.05.13-.054.5-.054z" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="font-bold">Next.js 13</h3>
-                <p className="text-sm text-muted-foreground">
-                  App dir, Routing, Layouts, Loading UI and API routes.
-                </p>
-              </div>
-            </div>
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
@@ -122,20 +136,6 @@ export default async function IndexPage() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <svg viewBox="0 0 24 24" className="h-12 w-12 fill-current">
-                <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="font-bold">Components</h3>
-                <p className="text-sm text-muted-foreground">
-                  UI components built using Radix UI and styled with Tailwind
-                  CSS.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -153,25 +153,137 @@ export default async function IndexPage() {
               </div>
             </div>
           </div>
-          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
-            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <svg viewBox="0 0 24 24" className="h-12 w-12 fill-current">
-                <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" />
-              </svg>
-              <div className="space-y-2">
-                <h3 className="font-bold">Subscriptions</h3>
-                <p className="text-sm text-muted-foreground">
-                  Free and paid subscriptions using Stripe.
-                </p>
-              </div>
+      </section>
+      <section id="yap">
+        <div className="h-full px-4 py-24">
+          <h2 className="font-heading text-5xl text-accent2-foreground"> SimplyAlgo empowers users in a way in a simple way, by creating a platform that connects everyday investors to the highest quality trading algorithms in the industry. We urge our investors to never settle for absurd management fees and mediocre performance, especially when it comes to their financial wellbeing.  </h2>
+
+        </div>
+
+      </section>
+      <section id="how-it-works">
+      <div className="bg-pearl py-8">
+        <div className="container mx-auto px-4">
+          <h2 className="mb-8 text-center text-3xl font-bold">How it works</h2>
+          <div className="flex flex-col items-center justify-evenly gap-24 md:flex-row">
+            <div className="mx-auto mb-8 basis-1/3 flex-col items-start text-center">
+              <Image src={SignUpSVG} alt={""} />
+              <h3 className="pt-8 text-center text-xl font-semibold">Sign up for free</h3>
+              <p className="text-center">Your first month free and you can cancel anytime.</p>
+              <Link href="/login" className={cn(buttonVariants({ size: "sm" }))}> Sign up </Link>
+            </div>
+            <div className="mx-auto mb-8 basis-1/3 flex-col items-start text-center">
+              <Image src={SubscribeSVG} alt={""} />
+              <h3 className="pt-8 text-center text-xl font-semibold">Subscribe to strategies for $18 a month</h3>
+              <p className="text-center">Explore our strategies with transparent performance tracking and subscribe to one that you like.</p>
+              <Link href='/explore' className={cn(buttonVariants({size: "sm" }))}>Explore strategies</Link>
+            </div>
+            <div className="mx-auto mb-8 basis-1/3 flex-col items-start text-center">
+              <Image src={DoneSVG} alt={""} />
+              <h3 className="pt-8 text-center text-xl font-semibold">Sit back and profit</h3>
+              <p className="text-center">Sleep soundly and live comfortably knowing that your money is simply growing.</p>
+              <Link href="/retirement" className={cn(buttonVariants({ size: "sm" }))}> How much can you make </Link>
             </div>
           </div>
         </div>
-        <div className="mx-auto text-center md:max-w-[58rem]">
-          <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Taxonomy also includes a blog and a full-featured documentation site
-            built using Contentlayer and MDX.
+      </div>
+      </section>
+
+      
+      <section id="call-to-action">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-pearl">
+        <Head>
+            <title>SimplyAlgo Holdings</title>
+          </Head>
+        <div className="relative m-8 flex items-center justify-center space-x-24">
+             
+          <MdxCard> <div className="flex flex-col space-y-4">
+            <h3 className="text-lg font-semibold">Current Holdings</h3>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">NVDA</span>
+              <span>NVIDIA Corporation</span>
+              <span className="ml-auto">28%</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">AAPL</span>
+              <span>Apple Inc.</span>
+              <span className="ml-auto">16%</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">META</span>
+              <span> Meta Platforms, Inc.</span>
+              <span className="ml-auto">18%</span>
+            </div>
+          </div></MdxCard>
+          <div className="flex items-center justify-center">
+            <div className="rounded-full bg-black p-4 text-white">
+              <span className="text-xl">&#8594;</span>
+            </div>
+          </div>
+          <MdxCard> <div className="flex flex-col space-y-4">
+            <h3 className="text-lg font-semibold">New Holdings</h3>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">NVDA</span>
+              <span>NVIDIA Corporation</span>
+              <span className="ml-auto">86%</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">AAPL</span>
+              <span>Apple Inc.</span>
+              <span className="ml-auto">56%</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="rounded bg-black px-2 py-1 font-bold text-white">META</span>
+              <span> Meta Platforms, Inc.</span>
+              <span className="ml-auto">63%</span>
+            </div>
+          </div></MdxCard>
+
+
+
+        </div>
+
+          <p className="mt-12 text-center text-xl font-semibold">
+            Why settle for <span className="underline"> <HoverMe trigger={"12% APR"} content="12% is the average return of the American stock market"/></span>, when you deserve 24%?
           </p>
+          <p className="text-center text-gray-600">
+            With over 25+ verified trading strategies, beating the market is easy. 
+          </p>
+        </div>
+      </section>
+      <section id="testimonies">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-12 pb-20 text-center">
+          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+            Testimonies
+          </h2>
+          <div className="m-auto flex w-full flex-row gap-16">
+            <Skeleton>
+              <CardSkeleton />
+            </Skeleton>
+            <h2 className="content-center text-left"> Our business model is simple: put our clients’ interests first. Sure, that means never charging commissions on trades and offering industry-leading interest on your chequing account, but it also means a lot more. Like total transparency into your investments and an innovative cost structure that ensures <span className="underline"> we only do well when you do. </span> </h2>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div className="min-h-screen p-6">
+        <Head>
+          <title>Frequently Asked Questions</title>
+        </Head>
+        <h1 className="mb-6 text-4xl font-bold">Frequently Asked Questions</h1>
+        <ul className="list-none p-0">
+          {faqs.map((faq, index) => (
+            <li key={index} className="border-t border-gray-300 py-4">
+              <details className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between">
+                  <span className="text-lg font-semibold">{faq.question}</span>
+                  <span className="text-xl text-black transition-transform group-open:rotate-180">&gt;</span>
+                </summary>
+                <p className="mt-2 text-gray-600">{faq.answer}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
         </div>
       </section>
       {/* <section
@@ -199,7 +311,7 @@ export default async function IndexPage() {
           </div>  
         </div>
       </section> */}
-      <section id="open-source" className="container py-8 md:py-12 lg:py-24">
+      {/* <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Passive investing, active returns.
@@ -233,14 +345,8 @@ export default async function IndexPage() {
             </Link>
           )}
         </div>
-      </section>
-      <section id="testimonies">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
-          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Testimonies
-          </h2>
-        </div>
-      </section>
+      </section> */}
+   
     </>
   )
 }
