@@ -15,7 +15,7 @@ export default async function MarketingLayout({
 }: MarketingLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="absolute top-0 -z-10 h-full w-full bg-pearl">
+      <div className="absolute top-0 -z-10 h-full w-full overflow-x-clip bg-pearl">
         <div className="opactiy-80 absolute bottom-auto left-auto right-0 top-0 h-[100%] w-full translate-x-[-40%] translate-y-[60%] rounded-full bg-[rgba(204,108,158,255)] blur-[100px]"></div>
         <div className="absolute bottom-auto left-auto right-0 top-0 h-[100%] w-full translate-x-[30%] translate-y-[40%] rounded-full bg-[rgba(238,164,146,255)] opacity-80 blur-[100px]"></div>
       </div>

@@ -4,6 +4,7 @@
 
 
 @layer base {
+  
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
@@ -81,5 +82,11 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  pre {
+    @apply bg-gray-800 text-white p-4 rounded-lg overflow-x-auto;
+  }
+  code {
+    @apply bg-gray-900 text-green-400 rounded px-1;
   }
 }

@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { useRouter } from 'next/navigation'
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -30,6 +32,8 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+
+  const router = useRouter()
 
   return (
     <div className="rounded-md border">
@@ -58,6 +62,10 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                onClick={() => {
+                  const strategy = row.original;
+                  router.push(`explore/${strategy.strategyId}`)
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
