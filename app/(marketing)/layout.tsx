@@ -27,7 +27,7 @@ export default async function MarketingLayout({
               href="/login"
               className={cn(
                 buttonVariants({ variant: "secondary", size: "sm" }),
-                "px-4"
+                "pointer-events-none cursor-not-allowed px-4"
               )}
             >
               Login
@@ -36,7 +36,7 @@ export default async function MarketingLayout({
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <SiteFooter />
+      {/* <SiteFooter /> */}
     </div>
   )
 }

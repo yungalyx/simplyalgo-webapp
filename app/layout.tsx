@@ -97,7 +97,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontLays.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
           <Analytics />
           <Toaster />

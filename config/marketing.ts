@@ -11,12 +11,12 @@ export const marketingConfig: MarketingConfig = {
     },
     {
       title: "How it works",
-      href: "/#how-it-works"
+      href: "/how-it-works"
     },
-    {
-      title: "Become a Strategist",
-      href: "/strategist",
-    },
+    // {
+    //   title: "Become a Strategist",
+    //   href: "/strategist",
+    // },
     
     // {
     //   title: "Pricing",
@@ -26,10 +26,10 @@ export const marketingConfig: MarketingConfig = {
     //   title: "Blog",
     //   href: "/blog",
     // },
-    {
-      title: "Documentation",
-      href: "/docs",
-    },
+    // {
+    //   title: "Documentation",
+    //   href: "/docs",
+    // },
   ],
 }
 
