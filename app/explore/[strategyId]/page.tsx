@@ -1,5 +1,4 @@
 import { IDetailedStrategy, IStrategies } from "@/lib/models"
-import { algos } from "../page"
 import { TrendingUp } from "lucide-react"
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
@@ -8,7 +7,12 @@ import { AlgoPerformanceChart } from "@/components/explore/algo-performance-char
 import { AlgoOrderTable } from "@/components/explore/algo-order-history"
 
 
-export default async function StrategyDetailPage({ params, searchParams}) {
+interface StrategyDetailPageProps {
+  params: string;
+  searchParams: string;
+}
+
+export default async function StrategyDetailPage({ params, searchParams}: StrategyDetailPageProps) {
   return <div>
     <AlgoPerformanceChart />
 

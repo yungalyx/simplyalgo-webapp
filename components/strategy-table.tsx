@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table"
 
 import { useRouter } from 'next/navigation'
+import { IStrategies } from "@/lib/models"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -63,8 +64,8 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
                 onClick={() => {
-                  const strategy = row.original;
-                  router.push(`explore/${strategy.strategyId}`)
+                  const strategy = row.original as unknown as IStrategies;
+                  router.push(`explore/${strategy.strategyId }`)
                 }}
               >
                 {row.getVisibleCells().map((cell) => (

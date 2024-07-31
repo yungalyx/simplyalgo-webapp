@@ -28,7 +28,7 @@ const strategyColumns: ColumnDef<IStrategies>[] = [
   },
 ]
 
-export const algos: IStrategies[] = [
+const algos: IStrategies[] = [
   {
     strategyId: "0",
     name: 'Dan Meuser',

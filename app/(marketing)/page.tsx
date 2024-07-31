@@ -1,9 +1,7 @@
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
-import DoneSVG from "@/public/images/marketing/grape-5.svg"
-import SubscribeSVG from "@/public/images/marketing/grape-8.svg"
-import SignUpSVG from "@/public/images/marketing/grape-14.svg"
+
 import DiagramSVG from "@/public/images/marketing/diagram.svg"
 
 import { env } from "@/env.mjs"
@@ -11,18 +9,13 @@ import { faqs } from "@/config/faq"
 import { solutions } from "@/config/marketing"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Card, CardDescription, CardTitle } from "@/components/ui/card"
+import { buttonVariants } from "@/components/ui/button"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { CardSkeleton } from "@/components/card-skeleton"
-import { Icons } from "@/components/icons"
-import { MdxCard } from "@/components/mdx-card"
-import CodeBlock from "@/components/marketing/codeblock"
 import DevFirst from "@/components/marketing/codeblock"
 
 async function getGitHubStars(): Promise<string | null> {
@@ -52,7 +45,12 @@ async function getGitHubStars(): Promise<string | null> {
   }
 }
 
-export function HoverMe({ trigger, content }) {
+interface HoverMeProps {
+  trigger: string;
+  content: string;
+}
+
+const HoverMe = ({ trigger, content }: HoverMeProps)  => {
   return (
     <HoverCard>
       <HoverCardTrigger>{trigger}</HoverCardTrigger>
@@ -221,23 +219,6 @@ export default async function IndexPage() {
         </div>
       </section>
 
-      <section id="use-cases" className="space-y-6 bg-inherit py-24">
-        <h1 className="pl-20 text-3xl font-semibold">
-          {" "}
-          Solutions for your sector{" "}
-        </h1>
-        <div className="flex-no-wrap no-scrollbar flex flex-row gap-12 overflow-scroll pl-20">
-          {solutions.map((x) => {
-            return (
-              <MdxCard className="w-1/4 flex-none p-10 hover:border-accent_purple">
-                <h1 className="text-2xl"> {x.title} </h1>
-                <p> {x.description} </p>
-              </MdxCard>
-            )
-          })}
-        </div>
-      </section>
-
       <section id="code-block" className="pb-36">
         <DevFirst />
         <div className='container mx-auto mt-20 flex flex-row items-center gap-24'>
@@ -254,6 +235,25 @@ export default async function IndexPage() {
             It&apos;s just that simple. 
           </div>
         </div> 
+      </section>
+
+      <section id="use-cases" className="space-y-6 bg-inherit py-24">
+        <h1 className="pl-20 text-3xl font-semibold">
+          {" "}
+          Solutions for your sector{" "}
+        </h1>
+        <div className="flex-no-wrap no-scrollbar flex flex-row gap-12 overflow-scroll pl-20">
+          {solutions.map((x) => {
+            return (
+              <Card className="w-1/4 flex-none p-2 hover:border-accent_purple">
+                <CardHeader>
+                  <CardTitle className="text-2xl"> {x.title} </CardTitle>
+                  <CardDescription> {x.description} </CardDescription>
+                </CardHeader>
+              </Card>
+            )
+          })}
+        </div>
       </section>
   
       {/* <section id="call-to-action py-24">

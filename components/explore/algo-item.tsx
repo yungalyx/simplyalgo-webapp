@@ -1,13 +1,20 @@
 import Link from "next/link"
-import { Post } from "@prisma/client"
+// import { AlgoPost } from "@prisma/client"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { PostOperations } from "@/components/post-operations"
 
 interface AlgoItemProp {
-  algo: Pick<Post, "id" | "title" | "published" | "createdAt" | "name">
-}
+  algo: {
+    id: string;
+        title: string
+        published: boolean;
+        createdAt: Date;
+        name: string;
+  }
+};
+
 
 export function AlgoItem({ algo }: AlgoItemProp) {
   return (
@@ -21,7 +28,7 @@ export function AlgoItem({ algo }: AlgoItemProp) {
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
-            {formatDate(algo.createdAt?.toDateString())}
+            {/* {formatDate(algo.createdAt?.toDateString())} */}
           </p>
         </div>
       </div>

@@ -13,17 +13,8 @@ import { PostItem } from "@/components/post-item"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 
 
-interface StrategyCreationFormProps {
-  params: { postId: string }
-}
 
-export function Popup({}) {
-  return (
-    <StrategyCreationForm />
-  )
-}
-
-export default async function EditorPage({ params }: StrategyCreationFormProps) {
+export default async function EditorPage() {
   // const user = await getCurrentUser()
 
   // if (!user) {

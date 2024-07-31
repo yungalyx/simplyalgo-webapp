@@ -1,19 +1,20 @@
 {
-  "name": "taxonomy",
+  "name": "simplyalgo",
   "version": "0.2.0",
   "private": true,
   "author": {
-    "name": "shadcn",
-    "url": "https://twitter.com/shadcn"
+    "name": "yungalyx",
+    "url": "https://alexanderlin.dev/"
   },
   "scripts": {
     "dev": "concurrently \"contentlayer dev\" \"next dev\"",
     "build": "contentlayer build && next build",
+    "check-types": "tsc --noemit",
+    "lint": "npm run check-types && next lint",
     "turbo": "next dev --turbo",
     "start": "next start",
-    "lint": "next lint",
     "preview": "next build && next start",
-    "postinstall": "prisma generate"
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@editorjs/code": "^2.8.0",
@@ -112,7 +113,7 @@
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "pretty-quick": "^3.1.3",
-    "prisma": "^4.13.0",
+    "prisma": "^5.17.0",
     "rehype": "^12.0.1",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-pretty-code": "^0.9.5",
