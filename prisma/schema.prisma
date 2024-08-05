@@ -2,12 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model Account {
@@ -51,14 +53,18 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  accounts Account[]
-  sessions Session[]
-  Post     Post[]
+  role String?
 
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  accounts   Account[]
+  sessions   Session[]
+  strategies Strategy[]
+  Post       Post[]
+
+  stripeCustomerId       String?        @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?        @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?        @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?      @map(name: "stripe_current_period_end")
+  Subscription           Subscription[]
 
   @@map(name: "users")
 }
@@ -84,4 +90,69 @@ model Post {
   author User @relation(fields: [authorId], references: [id])
 
   @@map(name: "posts")
+}
+
+model Subscription {
+  id           String   @id @default(cuid())
+  subscribedAt DateTime @default(now()) @map(name: "subscribed_at")
+  strategyId   String
+  authorId     String
+
+  strategy Strategy @relation(fields: [strategyId], references: [id])
+  author   User     @relation(fields: [authorId], references: [id])
+}
+
+model Strategy {
+  id        String         @id @default(cuid())
+  title     String
+  content   Json?
+  published Boolean        @default(false)
+  status    StrategyStatus @default(DRAFT)
+
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  refreshedAt DateTime @default(now()) @map(name: "refreshed_at")
+
+  authorId String
+  tags     String[]
+  orders   Order[]
+
+  backtestMetrics Json?
+  liveMetrics     Json?
+
+  author      User           @relation(fields: [authorId], references: [id])
+  subscribers Subscription[]
+
+  @@map(name: "strategies")
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now()) @map(name: "created_at")
+  filledAt  DateTime    @default(now()) @map(name: "filled_at")
+  status    OrderStatus @default(CREATING)
+
+  strategy   Strategy @relation(fields: [strategyId], references: [id])
+  strategyId String
+}
+
+enum StrategyStatus {
+  DRAFT
+  DEPLOYING
+  PAPER
+  LIVE
+  INACTIVE
+}
+
+enum OrderStatus {
+  CREATING
+  ACCEPTED
+  FILLED
+  CANCELLED
+
+  CANCEL_REQUESTED
+  MODIFY_REQUESTED
+
+  PENDING_SYSTEM
+  PENDING_EXCHANGE
 }

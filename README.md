@@ -1,3 +1,17 @@
+## Common Errors and Debugging::
+
+1. Error: P1001: A connection timeout that occurs when connecting from Prisma ORM to Neon, This error most likely means that the connection created by Prisma Client timed out before the Neon compute was activated.
+
+
+
+
+
+
+
+
+
+
+
 # Taxonomy
 
 An open source application built using the new router, server components and everything new in Next.js 13.
