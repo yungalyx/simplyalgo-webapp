@@ -27,7 +27,8 @@ export default async function MarketingLayout({
               href="/login"
               className={cn(
                 buttonVariants({ variant: "secondary", size: "sm" }),
-                "pointer-events-none cursor-not-allowed px-4"
+                // "pointer-events-none cursor-not-allowed px-4"
+                "px-4"
               )}
             >
               Login

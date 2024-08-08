@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  // previewFeatures = ["driverAdapters"]
+// previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -103,11 +103,12 @@ model Subscription {
 }
 
 model Strategy {
-  id        String         @id @default(cuid())
-  title     String
-  content   Json?
-  published Boolean        @default(false)
-  status    StrategyStatus @default(DRAFT)
+  id          String         @id @default(cuid())
+  title       String
+  description String         @db.Text @default("")
+  content     Json?
+  published   Boolean        @default(false)
+  status      StrategyStatus @default(DRAFT)
 
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")

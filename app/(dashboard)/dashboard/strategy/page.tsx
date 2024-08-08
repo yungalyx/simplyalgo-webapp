@@ -11,35 +11,39 @@ import { DashboardHeader } from "@/components/header"
 import { PostCreateButton } from "@/components/post-create-button"
 import { PostItem } from "@/components/post-item"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
+import { StrategyCreateButton } from "@/components/strategy-create-button"
 
+
+async function getStrategiesForUser(userId: User["id"]) {
+  return await db.strategy.findMany({
+    where: {
+      authorId: userId,
+    },
+  })
+}
 
 
 export default async function EditorPage() {
-  // const user = await getCurrentUser()
+  const user = await getCurrentUser()
 
-  // if (!user) {
-  //   redirect(authOptions?.pages?.signIn || "/login")
-  // }
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
 
   // const post = await getPostForUser(params.postId, user.id)
 
-  const posts = [{
-    id: "sefniofa",
-    title: "seomthing",
-    published: true,
-    createdAt: new Date(),
-  }];
+  const strategies = await getStrategiesForUser(user.id)
 
- 
   return (
     <DashboardShell>
       <DashboardHeader heading="Strategies" text="View your current strategies.">
-        <PostCreateButton />
+        {/* <PostCreateButton /> */}
+        <StrategyCreateButton />
       </DashboardHeader>
       <div>
-        {posts?.length ? (
+        {strategies?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
+            {strategies.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}
           </div>
@@ -57,3 +61,4 @@ export default async function EditorPage() {
     </DashboardShell>
   )
 }
+

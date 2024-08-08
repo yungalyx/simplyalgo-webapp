@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import { toast } from "./ui/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Strategy, User } from "@prisma/client"
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_IMAGE_MIME_TYPES = [
@@ -28,62 +30,98 @@ const ACCEPTED_IMAGE_MIME_TYPES = [
 ];
 
 const formSchema = z.object({
-  name: z.string().min(2, {
+  title: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
   description: z.string(),
+  tags: z.array(z.string()),
   strategyImage:  
     z.any().optional()
     .refine(file => file.length == 1 ? ACCEPTED_IMAGE_MIME_TYPES.includes(file?.[0]?.type) ? true : false : true, 'Invalid file. choose either JPEG or PNG image')
     .refine(file => file.length == 1 ? file[0]?.size <= MAX_FILE_SIZE ? true : false : true, 'Max file size allowed is 5MB.'),
-  triggerType: z.enum(["api", "upload", "manual"]),
+  // triggerType: z.enum(["api", "upload", "manual"]),
   strategyCode: z.string().optional(),
 }).refine((data) => {
-  if (data.triggerType == "upload") {
-    return !!data.strategyCode;
-  }
+  // if (data.triggerType == "upload") {
+  //   return !!data.strategyCode;
+  // }
   return true;
 }, {
   path: ["triggerType"],
   message: "Pine script is required"
 })
 
-export function StrategyCreationForm() {
+interface StrategyFormProps extends React.HTMLAttributes<HTMLFormElement> {
+  user: Pick<User, "id">
+  strategy: Strategy
+}
+
+
+export function StrategyCreationForm({ id, className, ...props }: StrategyFormProps) {
+  const router = useRouter()
+
 
   const [submitting, isSubmitting] = useState(false);
-
+ 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
+      title: "Untitled",
+      description: props.strategy.description,
       strategyCode: "", 
       strategyImage: undefined,
-      triggerType: undefined,
+      tags: [], 
+      status: undefined,
     },
   }) 
   // 2. Define a submit handler.
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {  
+  // data: FormData
+  const onSubmit = async(values: z.infer<typeof formSchema>) => {  
     isSubmitting(true);
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
+    
+    const response = await fetch(`/api/strategies/${props.strategy.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: values.title,
+        description: values.description,
+      }),
     })
+
+    isSubmitting(false);
+
+    if (!response?.ok) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your name was not updated. Please try again.",
+        variant: "destructive",
+      })
+    }
+    toast({
+      description: "Your strategy has been updated!",
+    })
+    // toast({
+    //   title: "You submitted the following values:",
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // })
+    router.refresh() 
   }
 
-  const triggerType = form.watch("triggerType")
+  // const triggerType = form.watch("triggerType")
   const fileRef = form.register("strategyImage")
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="title"
           render={({ field }) => (
               <FormItem>
                 <FormLabel>Strategy Name</FormLabel>
@@ -91,7 +129,7 @@ export function StrategyCreationForm() {
                   <Input placeholder="shadcn" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name. You cannot change this once it is created.
+                  How the world will see your strategy.
                 </FormDescription>
                 <FormMessage />
               </FormItem>    
@@ -107,7 +145,7 @@ export function StrategyCreationForm() {
                   <Input placeholder="shadcn" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is description
+                  Entice us with how your strategy works. 
                 </FormDescription>
                 <FormMessage />
               </FormItem>    
@@ -129,7 +167,7 @@ export function StrategyCreationForm() {
               </FormItem>    
           )}
         />
-         <FormField
+         {/* <FormField
           control={form.control}
           name="triggerType"
           render={({ field }) => (
@@ -154,8 +192,8 @@ export function StrategyCreationForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
-        {triggerType == "upload" && 
+        /> */}
+        {/* {triggerType == "upload" && 
           <FormField
            control={form.control}
            name="strategyCode"
@@ -172,9 +210,12 @@ export function StrategyCreationForm() {
                </FormItem>    
            )}
          />     
-        }
-        <Button type="submit" disabled={submitting} className="w-full">Submit</Button>
-        <Button type="button" onClick={() => console.log(form.formState.errors)}> Test</Button>
+        } */}
+        <div className="flex flex-row gap-24">
+          <Button type="button" onClick={() => router.back()}className="w-full"> Go Back </Button>
+          <Button type="submit" disabled={submitting} className="w-full">Submit</Button>
+        </div>
+    
       </form>
     </Form>
   )

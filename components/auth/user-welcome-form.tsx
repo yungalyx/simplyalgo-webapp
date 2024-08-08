@@ -19,7 +19,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type FormData = z.infer<typeof userAuthSchema>
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserWelcomeForm({ className, ...props }: UserAuthFormProps) {
   const {
     register,
     handleSubmit,
@@ -34,7 +34,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(data: FormData) {
     setIsLoading(true)
 
-    // automatically adds the CRSF token in the request
     const signInResult = await signIn("email", {
       email: data.email.toLowerCase(),
       redirect: false,

@@ -28,7 +28,7 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Strategies",
-      href: "/dashboard/editor",
+      href: "/dashboard/strategy",
       icon: "check"
     },
     {

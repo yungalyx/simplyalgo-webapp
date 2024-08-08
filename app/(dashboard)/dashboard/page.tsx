@@ -15,11 +15,11 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-  // const user = await getCurrentUser()
+  const user = await getCurrentUser()
 
-  // if (!user) {
-  //   redirect(authOptions?.pages?.signIn || "/login")
-  // }
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
 
 
   // const posts = await db.post.findMany({
@@ -36,12 +36,14 @@ export default async function DashboardPage() {
   //     updatedAt: "desc",
   //   },
   // })
-  return (<Skeleton>
+  return (<div>
+    <h1 className="text-3xl"> Good Morning {user.name} </h1>
     <h1> Balance </h1>
     <p> $643,810</p>
     <div className="h-full w-full"> Please add a chart here </div>
     <p> Amount available to trade: $28, 312</p>
-  </Skeleton>)
+    </div>
+  )
 
- 
+
 }

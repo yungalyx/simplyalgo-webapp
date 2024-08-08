@@ -20,6 +20,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
+    // newUser: "/welcome"
   },
   providers: [
     GitHubProvider({
@@ -38,15 +39,23 @@ export const authOptions: NextAuthOptions = {
           },
         })
 
-        const templateId = user?.emailVerified
-          ? env.POSTMARK_SIGN_IN_TEMPLATE
-          : env.POSTMARK_ACTIVATION_TEMPLATE
-        if (!templateId) {
-          throw new Error("Missing template id")
+        // const templateId = user?.emailVerified
+        //   ? env.POSTMARK_SIGN_IN_TEMPLATE
+        //   : env.POSTMARK_ACTIVATION_TEMPLATE
+        // if (!templateId) {
+        //   throw new Error("Missing template id")
+        // }
+
+        const templateAlias = user?.emailVerified
+        ? "welcome"
+        : "welcome"
+        if (!templateAlias) {
+          throw new Error("Missing template alias")
         }
 
         const result = await postmarkClient.sendEmailWithTemplate({
-          TemplateId: parseInt(templateId),
+          // TemplateId: parseInt(templateId),
+          TemplateAlias: templateAlias,
           To: identifier,
           From: provider.from as string,
           TemplateModel: {

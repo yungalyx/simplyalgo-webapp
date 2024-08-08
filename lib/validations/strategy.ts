@@ -1,10 +1,10 @@
 import * as z from "zod"
 
-export const postPatchSchema = z.object({
+export const strategyPatchSchema = z.object({
   title: z.string().min(3).max(128).optional(),
+  description: z.string().optional(),
 
   // TODO: Type this properly from editorjs block types?
-  content: z.any().optional(),
+  // content: z.any().optional(),
+  
 })
-
-
