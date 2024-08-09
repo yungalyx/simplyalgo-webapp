@@ -53,7 +53,7 @@ const formSchema = z.object({
 
 interface StrategyFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: Pick<User, "id">
-  strategy: Strategy
+  strategy: Pick<Strategy, "id" | "title" | "description">
 }
 
 
@@ -66,12 +66,11 @@ export function StrategyCreationForm({ id, className, ...props }: StrategyFormPr
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "Untitled",
+      title: props.strategy.title,
       description: props.strategy.description,
       strategyCode: "", 
       strategyImage: undefined,
-      tags: [], 
-      status: undefined,
+      tags: [],
     },
   }) 
   // 2. Define a submit handler.
@@ -110,7 +109,7 @@ export function StrategyCreationForm({ id, className, ...props }: StrategyFormPr
     //     </pre>
     //   ),
     // })
-    router.refresh() 
+    router.back()
   }
 
   // const triggerType = form.watch("triggerType")

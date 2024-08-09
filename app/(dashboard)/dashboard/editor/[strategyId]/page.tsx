@@ -6,6 +6,7 @@ import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import { Editor } from "@/components/editor"
 import { StrategyCreationForm } from "@/components/strategy-form"
+import { APIContainer } from "@/components/api-container"
 
 async function getPostForUser(postId: Post["id"], userId: User["id"]) {
   return await db.post.findFirst({
@@ -56,8 +57,11 @@ export default async function EditorPage({ params }: EditorPageProps) {
   }
 
   return (
-
-    <StrategyCreationForm user={user} strategy={strategy}/>
+    <div>
+       <StrategyCreationForm user={user} strategy={strategy}/>
+       <APIContainer strategy={strategy} />
+    </div>
+   
     // <Editor
     //   post={{
     //     id: post.id,
