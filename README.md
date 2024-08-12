@@ -7,6 +7,10 @@
 ## Commands 
 
 
+- npx prisma migrate dev, generates models and syncs with remote db 
+- npm prisma generate, attaches models to typescript
+
+- connect: connects new obj with existing obj
 
 
 

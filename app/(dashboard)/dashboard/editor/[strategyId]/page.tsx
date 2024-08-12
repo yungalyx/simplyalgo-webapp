@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation"
-import { Post, User } from "@prisma/client"
+import { Post, Strategy, User } from "@prisma/client"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -26,6 +26,17 @@ async function getStrategyForUser(strategyId: Post["id"], userId: User["id"]) {
   })
 }
 
+async function getApiKeyForStrategy(strategyId: Strategy["id"]) {
+  return await db.apiKey.findFirst({
+    select: {
+      id: true
+    },
+    where: {
+      strategyId: strategyId,
+    },
+  })
+}
+
 
 interface EditorPageProps {
   params: { strategyId: string }
@@ -42,6 +53,8 @@ export default async function EditorPage({ params }: EditorPageProps) {
 
   const strategy = await getStrategyForUser(params.strategyId, user.id)
 
+  const key = await getApiKeyForStrategy(params.strategyId);
+
   // const post = {
   //   id: "sefniofa",
   //   title: "seomthing",
@@ -52,14 +65,15 @@ export default async function EditorPage({ params }: EditorPageProps) {
   //   }
   // };
 
-  if (!strategy) {
+  if (!strategy || !key) {
     notFound()
   }
 
   return (
     <div>
        <StrategyCreationForm user={user} strategy={strategy}/>
-       <APIContainer strategy={strategy} />
+       <APIContainer id={key.id} />
+ 
     </div>
    
     // <Editor

@@ -44,6 +44,13 @@ model Session {
   @@map(name: "sessions")
 }
 
+model ApiKey {
+  id          String    @id @default(cuid())
+  strategyId  String    @unique
+  strategy    Strategy  @relation(fields: [strategyId], references: [id])
+  enabled     Boolean   @default(true)
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -109,6 +116,8 @@ model Strategy {
   content     Json?
   published   Boolean        @default(false)
   status      StrategyStatus @default(DRAFT)
+
+  creatorKey  ApiKey?
 
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
